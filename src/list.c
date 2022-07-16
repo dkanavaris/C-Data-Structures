@@ -82,6 +82,56 @@ int list_append(list_t *list, void *data){
     return 0;
 }
 
+int list_remove(list_t *list, void *data){
+
+    int data_exists = 0;
+    if(!list)
+        return LIST_IS_NULL;
+
+    node_t *curr;
+
+    // Find the node containing @data
+    for(curr = list->head; curr != NULL; curr = curr->next){
+        if(!(list->compare(curr->data, data))){
+            data_exists = 1;
+            break;
+        }
+    }
+
+    // No such node was found
+    if(!data_exists)
+        return -1;
+
+    if(list->size == 1){
+        list->head = list->tail = NULL;
+        list->size = 0;
+    }
+    
+    else if(curr == list->head){
+        curr->next->prev = NULL;
+        list->head = curr->next;
+        (list->size)--;
+    }
+
+    else if(curr == list->tail){
+        curr->prev->next = NULL;
+        list->tail = curr->prev;
+        (list->size)--;
+    }
+
+    else{
+        curr->next->prev = curr->prev;
+        curr->prev->next = curr->next;
+        (list->size)--;
+    }
+
+    // Free the node
+    list->free_node_data(curr->data);
+    free(curr);
+    return 0;
+}
+
+
 int list_contains(list_t *list, void *data){
 
     if(!list)
