@@ -31,7 +31,7 @@ void list_destroy(list_t *list);
 
 
 int list_append(list_t *list, void *data);
-
+int list_contains(list_t *list, void *data);
 
 
 #endif

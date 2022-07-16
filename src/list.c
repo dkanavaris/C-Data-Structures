@@ -13,7 +13,7 @@ list_t *list_init(int (*compare)(void *d1, void *d2),
     list_t *list = (list_t *)malloc(sizeof(list_t)); 
 
     if(!list)
-        return MALLOC_ERROR;
+        return NULL;
     
     // Init the list
     list->head = NULL;
@@ -81,3 +81,18 @@ int list_append(list_t *list, void *data){
 
     return 0;
 }
+
+int list_contains(list_t *list, void *data){
+
+    if(!list)
+        return LIST_IS_NULL;
+    
+    node_t *curr;
+
+    for(curr = list->head; curr != NULL; curr = curr->next){
+        if(!(list->compare(curr->data, data)))
+            return 1;
+    }
+
+    return 0;
+}   
