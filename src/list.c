@@ -2,7 +2,11 @@
 #include "list.h"
 #include <stdio.h>
 
-
+/* Initialize a new list
+ * Returns a pointer to list_t struct
+ * Params : 
+ * @compare function used to compare list nodes,
+ * @free_node_data function used to free the list nodes data */
 list_t *list_init(int (*compare)(void *d1, void *d2), 
 					        void (*free_node_data)(void *)){
 
@@ -23,6 +27,9 @@ list_t *list_init(int (*compare)(void *d1, void *d2),
     return list;
 }
 
+/* Destroy a list
+ * Params : 
+ * @list to be destroyed */
 void list_destroy(list_t *list){
 
     if(!list)
@@ -42,6 +49,12 @@ void list_destroy(list_t *list){
     free(list); // Finally free the list
 }
 
+
+/* Append to a list
+ * Returns 0 on success
+ * Params : 
+ * @list to append data to,
+ * @data to be appended */
 int list_append(list_t *list, void *data){
 
     if(!list)
@@ -69,6 +82,12 @@ int list_append(list_t *list, void *data){
     return 0;
 }
 
+
+/* Get the list size
+ * Returns an unsigned long that is the list size
+ * LIST_IS_NULL if list param is NULL
+ * Params: 
+ * @list to get the size of. */
 unsigned long get_list_size(list_t *list){
 
     if(!list)
@@ -77,6 +96,14 @@ unsigned long get_list_size(list_t *list){
     return list->size;
 }
 
+/* Insert a node containing @data after node containing @after data.
+ * Returns 0 on success
+ * -1 if @after is not in list
+ * MALLOC_ERROR on malloc error
+ * Params : 
+ * @list to append data to,
+ * @after node to insert data after.
+ * @data to be appended */
 int list_insert_after(list_t *list, void *after, void *data){
     
     if(!list)
@@ -111,6 +138,12 @@ int list_insert_after(list_t *list, void *after, void *data){
     return 0;
 }
 
+/* Remove node from list
+ * Returns 0 on success
+ * LIST_IS_NULL if list is NULL
+ * Params : 
+ * @list to append data to,
+ * @data to be removed */
 int list_remove(list_t *list, void *data){
 
     if(!list)
@@ -152,6 +185,12 @@ int list_remove(list_t *list, void *data){
     return 0;
 }
 
+/* Get node containing @data
+ * Returns pointer to node on success
+ * NULL otherwise
+ * Params : 
+ * @list to get node from
+ * @data that the node contains */
 node_t *get_node(list_t *list, void *data){
 
     node_t *curr;
@@ -164,6 +203,12 @@ node_t *get_node(list_t *list, void *data){
     return NULL;
 }
 
+/* Check if list contains @data
+ * Returns 1 if @data is in list
+ * -1 otherwise
+ * Params : 
+ * @list to get node from
+ * @data that the node contains */
 int list_contains(list_t *list, void *data){
 
     if(!list)
