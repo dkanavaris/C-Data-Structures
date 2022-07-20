@@ -2,11 +2,7 @@
 #include "list.h"
 #include <stdio.h>
 
-/* Initialize a new list
- * Returns a pointer to list_t struct
- * Params : 
- * @compare function used to compare list nodes,
- * @free_node_data function used to free the list nodes data */
+
 list_t *list_init(int (*compare)(void *d1, void *d2), 
 					        void (*free_node_data)(void *)){
 
@@ -27,9 +23,6 @@ list_t *list_init(int (*compare)(void *d1, void *d2),
     return list;
 }
 
-/* Destroy a list
- * Params : 
- * @list to be destroyed */
 void list_destroy(list_t *list){
 
     if(!list)
@@ -49,13 +42,6 @@ void list_destroy(list_t *list){
     free(list); // Finally free the list
 }
 
-
-
-/* Append to a list
- * Returns 0 on success
- * Params : 
- * @list to append data to,
- * @data to be appended */
 int list_append(list_t *list, void *data){
 
     if(!list)
@@ -190,5 +176,5 @@ int list_contains(list_t *list, void *data){
             return 1;
     }
 
-    return 0;
+    return -1;
 }   
