@@ -29,10 +29,11 @@ list_t *list_init(int (*compare)(void *d1, void *d2),
 					void (*free_node_data)(void *));
 void list_destroy(list_t *list);
 
+node_t *get_node(list_t *list, void *data);
 
 int list_append(list_t *list, void *data);
 int list_remove(list_t *list, void *data);
 int list_contains(list_t *list, void *data);
-
+int list_insert_after(list_t *list, void *after, void *data);
 
 #endif

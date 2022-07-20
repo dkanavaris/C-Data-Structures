@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "list.h"
+#include <stdio.h>
 
 /* Initialize a new list
  * Returns a pointer to list_t struct
@@ -82,24 +83,50 @@ int list_append(list_t *list, void *data){
     return 0;
 }
 
-int list_remove(list_t *list, void *data){
-
-    int data_exists = 0;
+int list_insert_after(list_t *list, void *after, void *data){
+    
     if(!list)
         return LIST_IS_NULL;
 
-    node_t *curr;
+    node_t *after_node = get_node(list, after);
 
-    // Find the node containing @data
-    for(curr = list->head; curr != NULL; curr = curr->next){
-        if(!(list->compare(curr->data, data))){
-            data_exists = 1;
-            break;
-        }
+    if(!after_node)
+        return -1;
+
+    node_t *node = (node_t *)malloc(sizeof(node_t));
+
+    if(!node)
+        return MALLOC_ERROR;
+
+    node->next = node->prev = NULL;
+    node->data = data;
+
+    if(after_node == list->tail){
+        list->tail->next = node;
+        node->prev = list->tail;
+        list->tail = node;
+        (list->size)++;
+        return 0;
     }
 
+    node->next = after_node->next;
+    node->prev = after_node;
+    after_node->next->prev = node;
+    after_node->next = node;
+    (list->size)++;
+    return 0;
+}
+
+int list_remove(list_t *list, void *data){
+
+    if(!list)
+        return LIST_IS_NULL;
+
+    node_t *curr = get_node(list, data);
+
+
     // No such node was found
-    if(!data_exists)
+    if(!curr)
         return -1;
 
     if(list->size == 1){
@@ -131,6 +158,17 @@ int list_remove(list_t *list, void *data){
     return 0;
 }
 
+node_t *get_node(list_t *list, void *data){
+
+    node_t *curr;
+
+    for(curr = list->head; curr != NULL; curr = curr->next){
+        if(!(list->compare(curr->data, data)))
+            return curr;
+    }
+
+    return NULL;
+}
 
 int list_contains(list_t *list, void *data){
 
