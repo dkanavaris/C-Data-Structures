@@ -83,6 +83,14 @@ int list_append(list_t *list, void *data){
     return 0;
 }
 
+unsigned long get_list_size(list_t *list){
+
+    if(!list)
+        return LIST_IS_NULL;
+    
+    return list->size;
+}
+
 int list_insert_after(list_t *list, void *after, void *data){
     
     if(!list)
