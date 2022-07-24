@@ -42,4 +42,6 @@ int list_contains(list_t *list, void *data);
 int list_insert_after(list_t *list, void *after, void *data);
 
 void *list_pop(list_t *list, int index);
+
+void list_clear(list_t *list);
 #endif

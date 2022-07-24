@@ -35,16 +35,7 @@ void list_destroy(list_t *list){
     if(!list)
         return;
 
-    node_t *curr, *next;
-
-    curr = list->head;
-
-    while(curr){
-        next = curr->next;
-        list->free_node_data(curr->data); // Free the node data
-        free(curr);  // Free the node
-        curr = next;
-    }
+    list_clear(list);
 
     free(list); // Finally free the list
 }
@@ -82,6 +73,21 @@ int list_append(list_t *list, void *data){
     return 0;
 }
 
+void list_clear(list_t *list){
+
+    if(!list)
+        return;
+
+    node_t *curr = list->head;
+    node_t *next;
+    
+    while(curr){
+        next = curr->next;
+        list->free_node_data(curr->data);
+        free(curr);
+        curr = next;
+    }
+}
 
 /* Get the list size
  * Returns an unsigned long that is the list size
