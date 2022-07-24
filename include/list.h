@@ -32,9 +32,14 @@ void list_destroy(list_t *list);
 node_t *get_node(list_t *list, void *data);
 
 unsigned long get_list_size(list_t *list);
+
 int list_append(list_t *list, void *data);
-int list_remove(list_t *list, void *data);
+
+void *list_remove(list_t *list, void *data);
+
 int list_contains(list_t *list, void *data);
+
 int list_insert_after(list_t *list, void *after, void *data);
 
+void *list_pop(list_t *list, int index);
 #endif

@@ -143,18 +143,19 @@ int list_insert_after(list_t *list, void *after, void *data){
  * LIST_IS_NULL if list is NULL
  * Params : 
  * @list to append data to,
- * @data to be removed */
-int list_remove(list_t *list, void *data){
+ * @data to be removed 
+ * NOTICE the end user is responsible for freeing the memory allocated for data*/
+void *list_remove(list_t *list, void *data){
 
     if(!list)
-        return LIST_IS_NULL;
+        return NULL;
 
     node_t *curr = get_node(list, data);
 
 
     // No such node was found
     if(!curr)
-        return -1;
+        return NULL;
 
     if(list->size == 1){
         list->head = list->tail = NULL;
@@ -180,11 +181,40 @@ int list_remove(list_t *list, void *data){
     }
 
     // Free the node
-    list->free_node_data(curr->data);
+    void *return_data = curr->data;
     free(curr);
-    return 0;
+    return return_data;
 }
 
+/* Remove node from list
+ * Returns 0 on success
+ * LIST_IS_NULL if list is NULL
+ * Params : 
+ * @list to append data to,
+ * @index of node to be removed 
+ * NOTICE the end user is responsible for freeing the memory allocated for data*/
+void *list_pop(list_t *list, int index){
+    if(index < 0 || index > (list->size - 1))
+        return NULL;
+
+    if(index == 0){
+        return list_remove(list, list->head->data);
+    }
+
+    else if(index == (list->size - 1)){
+        return list_remove(list, list->tail->data);
+    }
+
+    
+    node_t *curr_node;
+    int curr_index = 0;
+    for(curr_node = list->head; curr_node != NULL && curr_index != index; 
+                                curr_node = curr_node->next,curr_index++);
+
+    return list_remove(list, curr_node->data);
+    
+
+}
 /* Get node containing @data
  * Returns pointer to node on success
  * NULL otherwise
