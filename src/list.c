@@ -102,6 +102,55 @@ unsigned long get_list_size(list_t *list){
     return list->size;
 }
 
+int list_insert(list_t *list, int index, void *data){
+
+    if(!list)
+        return LIST_IS_NULL;
+
+    node_t *node = (node_t *)malloc(sizeof(node_t));
+    if(!node)
+        return MALLOC_ERROR;
+    
+    node->next = node->prev = NULL;
+    node->data = data;
+
+    // Insert at head
+    if(index == 0){
+        node->next = list->head;
+        list->head->prev = node;
+        list->head = node;
+        (list->size)++;
+        return 0;
+    }
+
+    if(index == list->size - 1){
+        node->prev = list->tail;
+        list->tail->next = node;
+        list->tail = node;
+        (list->size)++;
+        return 0;
+    }
+
+    // TODO:  Add to middle index
+    node_t *curr_node;
+    int curr_index = 0;
+
+    for(curr_node = list->head; curr_node != NULL && curr_index != index; 
+                                        curr_node = curr_node->next, curr_index++);
+
+    if(!curr_node){
+        free(node);
+        return INVALID_INDEX;
+    }
+
+    curr_node->next->prev = node;
+    curr_node->prev->next = node;
+    node->prev = curr_node->prev;
+    node->next = curr_node->next;
+    (list->size)++;
+    return 0;
+}
+
 /* Insert a node containing @data after node containing @after data.
  * Returns 0 on success
  * -1 if @after is not in list
@@ -217,6 +266,9 @@ void *list_pop(list_t *list, int index){
     for(curr_node = list->head; curr_node != NULL && curr_index != index; 
                                 curr_node = curr_node->next,curr_index++);
 
+    if(!curr_node)
+        return NULL;
+
     return list_remove(list, curr_node->data);
     
 
@@ -237,6 +289,22 @@ node_t *get_node(list_t *list, void *data){
     }
 
     return NULL;
+}
+
+int list_count(list_t *list, void *data){
+
+    if(!list)
+        return LIST_IS_NULL;
+
+    node_t *curr;
+    int count = 0;
+
+    for(curr = list->head; curr != NULL; curr = curr->next){
+        if(!(list->compare(curr->data, data)))
+            count++;
+    }
+
+    return count;
 }
 
 /* Check if list contains @data
