@@ -19,7 +19,10 @@ stack_t *stack_init(){
     return stack;
 }
 
-
+void stack_destroy(stack_t *stack){
+    list_destroy(stack->list);
+    free(stack);
+}
 
 
 int stack_push(stack_t *stack, void *data){
