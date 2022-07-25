@@ -193,6 +193,40 @@ int list_insert_after(list_t *list, void *after, void *data){
     return 0;
 }
 
+void *remove_node(list_t *list, node_t *node){
+    // No such node was found
+    if(!node)
+        return NULL;
+
+    if(list->size == 1){
+        list->head = list->tail = NULL;
+        list->size = 0;
+    }
+    
+    else if(node == list->head){
+        node->next->prev = NULL;
+        list->head = node->next;
+        (list->size)--;
+    }
+
+    else if(node == list->tail){
+        node->prev->next = NULL;
+        list->tail = node->prev;
+        (list->size)--;
+    }
+
+    else{
+        node->next->prev = node->prev;
+        node->prev->next = node->next;
+        (list->size)--;
+    }
+
+    // Free the node
+    void *return_data = node->data;
+    free(node);
+    return return_data;
+}
+
 /* Remove node from list
  * Returns 0 on success
  * LIST_IS_NULL if list is NULL
@@ -207,38 +241,8 @@ void *list_remove(list_t *list, void *data){
 
     node_t *curr = get_node(list, data);
 
+    return remove_node(list, curr);
 
-    // No such node was found
-    if(!curr)
-        return NULL;
-
-    if(list->size == 1){
-        list->head = list->tail = NULL;
-        list->size = 0;
-    }
-    
-    else if(curr == list->head){
-        curr->next->prev = NULL;
-        list->head = curr->next;
-        (list->size)--;
-    }
-
-    else if(curr == list->tail){
-        curr->prev->next = NULL;
-        list->tail = curr->prev;
-        (list->size)--;
-    }
-
-    else{
-        curr->next->prev = curr->prev;
-        curr->prev->next = curr->next;
-        (list->size)--;
-    }
-
-    // Free the node
-    void *return_data = curr->data;
-    free(curr);
-    return return_data;
 }
 
 /* Remove node from list
@@ -266,13 +270,10 @@ void *list_pop(list_t *list, int index){
     for(curr_node = list->head; curr_node != NULL && curr_index != index; 
                                 curr_node = curr_node->next,curr_index++);
 
-    if(!curr_node)
-        return NULL;
-
-    return list_remove(list, curr_node->data);
     
-
+    return remove_node(list, curr_node);
 }
+
 /* Get node containing @data
  * Returns pointer to node on success
  * NULL otherwise
@@ -307,6 +308,25 @@ int list_count(list_t *list, void *data){
     return count;
 }
 
+int list_reverse(list_t *list){
+
+    node_t *curr = list->head;
+    node_t *next;
+    node_t *temp;
+
+    while(curr != NULL){
+        next = curr->next;
+        temp = curr->next;
+        curr->next = curr->prev;
+        curr->prev = temp;
+        curr = next;    
+    }
+
+    temp = list->head;
+    list->head = list->tail;
+    list->tail = temp;
+    return 0;
+}
 /* Check if list contains @data
  * Returns 1 if @data is in list
  * -1 otherwise
