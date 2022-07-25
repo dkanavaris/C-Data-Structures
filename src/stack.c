@@ -19,6 +19,9 @@ stack_t *stack_init(){
     return stack;
 }
 
+
+
+
 int stack_push(stack_t *stack, void *data){
 
 	return list_append(stack->list, data);

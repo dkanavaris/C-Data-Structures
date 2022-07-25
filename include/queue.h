@@ -8,6 +8,7 @@ typedef struct queue{
 }queue_t;
 
 queue_t *queue_init();
+void queue_destroy(queue_t *queue);
 
 int queue_enqueue_front(queue_t *queue, void *data);
 int queue_enqueue_back(queue_t *queue, void *data);

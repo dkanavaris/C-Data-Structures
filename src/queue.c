@@ -17,6 +17,12 @@ queue_t *queue_init(){
     return queue;
 }
 
+
+void queue_destroy(queue_t *queue){
+    list_destroy(queue->list);
+    free(queue);
+}
+
 int queue_enqueue_front(queue_t *queue, void *data){
     return list_insert(queue->list, 0, data);
 }
