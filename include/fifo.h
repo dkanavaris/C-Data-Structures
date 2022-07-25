@@ -8,6 +8,7 @@ typedef struct fifo{
 }fifo_t;
 
 fifo_t *fifo_init();
+void fifo_destroy(fifo_t *fifo);
 
 int fifo_enqueue(fifo_t *fifo, void *data);
 void *fifo_dequeue(fifo_t *fifo);

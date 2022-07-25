@@ -16,6 +16,11 @@ fifo_t *fifo_init(){
     return fifo;
 }
 
+void fifo_destroy(fifo_t *fifo){
+    list_destroy(fifo->list);
+    free(fifo);
+}
+
 int fifo_enqueue(fifo_t *fifo, void *data){
     return list_append(fifo->list, data);
 }
