@@ -1,7 +1,6 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "stack.h"
-
+#include "list.h"
 
 
 stack_t *stack_init(){
