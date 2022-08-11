@@ -1,5 +1,5 @@
 CC = gcc
-WFLAGS = -Wall
+WFLAGS = -Wall -Werror -Wextra
 SRC_DIR = ./src
 BUILD_DIR = ./build
 INC_DIR = ./include

@@ -41,6 +41,19 @@ int main(int argc, char **argv){
     stack_push(stack, d7);
     stack_push(stack, d8);
 
+    void *data = stack_peek(stack);
+    printf("Got data %d\n", *(int *)data);
+    
+    data = stack_peek(stack);
+    printf("Got data %d\n", *(int *)data);
+
+    data = stack_pop(stack);
+    printf("Got data %d\n", *(int *)data);
+
+    data = stack_peek(stack);
+    printf("Got data %d\n", *(int *)data);
+
     stack_destroy(stack);
+
     return 0;
 }

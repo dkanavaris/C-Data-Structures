@@ -34,7 +34,7 @@ void *stack_peek(stack_t *stack){
 }
 
 void *stack_pop(stack_t *stack){
-	return list_pop(stack->list, get_list_size(stack->list) - 1);
+	return list_pop(stack->list, get_list_size(stack->list) - 2);
 }
 
 int stack_is_empty(stack_t *stack){
