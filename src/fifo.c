@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "./include/fifo.h"
+#include "fifo.h"
 #include <stdio.h>
 
 fifo_t *fifo_init(){

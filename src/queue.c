@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "./include/queue.h"
-#include "./include/list.h"
+#include "queue.h"
+#include "list.h"
 
 queue_t *queue_init(){
 
