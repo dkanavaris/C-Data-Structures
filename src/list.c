@@ -327,6 +327,7 @@ int list_reverse(list_t *list){
     list->tail = temp;
     return 0;
 }
+
 /* Check if list contains @data
  * Returns 1 if @data is in list
  * -1 otherwise
