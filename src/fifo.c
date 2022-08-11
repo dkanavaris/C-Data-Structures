@@ -2,14 +2,14 @@
 #include "fifo.h"
 #include <stdio.h>
 
-fifo_t *fifo_init(){
+fifo_t *fifo_init(void (*free_data)(void *)){
 
     fifo_t *fifo = (fifo_t *)malloc(sizeof(fifo_t));
 
     if(!fifo)
         return NULL;
 
-    fifo->list = list_init(NULL, NULL);
+    fifo->list = list_init(NULL, free_data);
     if(!fifo->list)
         return NULL;
     
