@@ -257,11 +257,11 @@ void *list_pop(list_t *list, int index){
         return NULL;
 
     if(index == 0){
-        return list_remove(list, list->head->data);
+        return remove_node(list, list->head->data);
     }
 
     else if(index == (list->size - 1)){
-        return list_remove(list, list->tail->data);
+        return remove_node(list, list->tail->data);
     }
 
     
