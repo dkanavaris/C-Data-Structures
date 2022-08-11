@@ -7,7 +7,8 @@ typedef struct stack {
     list_t *list;
 }stack_t;
 
-stack_t *stack_init();
+stack_t *stack_init(void (*free_data)(void *));
+
 void stack_destroy(stack_t *stack);
 
 int stack_push(stack_t *stack, void *data);

@@ -3,14 +3,14 @@
 #include "list.h"
 
 
-stack_t *stack_init(){
+stack_t *stack_init(void (*free_data)(void *)){
 
     stack_t *stack = (stack_t *)malloc(sizeof(stack_t));
 
     if(!stack)
         return NULL;
     
-    stack->list = list_init(NULL, NULL);
+    stack->list = list_init(NULL, free_data);
 
     if(!stack->list)
         return NULL;
