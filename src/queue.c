@@ -2,14 +2,14 @@
 #include "queue.h"
 #include "list.h"
 
-queue_t *queue_init(){
+queue_t *queue_init(void (*free_node_data)(void *)){
 
     queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
 
     if(!queue)
         return NULL;
 
-    queue->list = list_init(NULL, NULL);
+    queue->list = list_init(NULL, free_node_data);
 
     if(!queue->list)
         return NULL;
