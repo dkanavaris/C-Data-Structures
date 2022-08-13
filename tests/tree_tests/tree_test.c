@@ -109,5 +109,6 @@ int main(int argc, char **agrv){
     my_data.value = "O";
     printf("Tree contains O : %d\n", tree_contains(tree, &my_data));
 
+    tree_destroy(tree);
     return 0;
 }

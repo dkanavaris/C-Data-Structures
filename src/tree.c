@@ -105,6 +105,26 @@ tree_t *tree_init(int (*compare)(void *d1, void *d2),
                 
 }
 
+void clear_tree_nodes(tree_t *tree, tree_node_t *node){
+
+    if(node->left)
+        clear_tree_nodes(tree, node->left);
+    if(node->right)
+        clear_tree_nodes(tree, node->right);
+    
+    tree->free_node_data(node->data);
+    free(node);
+}
+
+void tree_destroy(tree_t *tree){
+
+    if(!tree || !tree->root)
+        return;
+    
+    clear_tree_nodes(tree, tree->root);
+    free(tree);
+}
+
 tree_node_t *tree_insert(tree_t *tree, void *data){
 
     if(!tree){
