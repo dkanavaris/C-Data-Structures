@@ -2,6 +2,12 @@
 #include "tree.h"
 
 // Helper functions
+/**
+ * @brief Check if node is a left child
+ * 
+ * @param node to check
+ * @return int 1 if node is left child, 0 otherwise
+ */
 int is_left_child(tree_node_t *node){
 
     if(!node)
@@ -10,6 +16,12 @@ int is_left_child(tree_node_t *node){
     return (node->parent->left == node);
 }
 
+/**
+ * @brief Check if node is a right child
+ * 
+ * @param node to check
+ * @return int 1 if node is right child, 0 otherwise
+ */
 int is_right_child(tree_node_t *node){
     if(!node)
         return -1;
@@ -17,6 +29,14 @@ int is_right_child(tree_node_t *node){
     return (node->parent->right == node);
 }
 
+/**
+ * @brief Get the sibling of a node
+ * 
+ * @param tree 
+ * @param node to get sibling of
+ * @return tree_node_t* NULL if no sibling exists,
+                        pointer to sibling if it exists
+ */
 tree_node_t *get_sibling(tree_t *tree, tree_node_t *node){
 
     if(node->parent == NULL)
@@ -29,6 +49,12 @@ tree_node_t *get_sibling(tree_t *tree, tree_node_t *node){
     return node->parent->left;
 }
 
+/**
+ * @brief Swaps two nodes data
+ * 
+ * @param d1 first node
+ * @param d2 second node
+ */
 void swap_node_data(tree_node_t *d1, tree_node_t *d2){
 
     void *tmp = d1->data;
@@ -36,13 +62,14 @@ void swap_node_data(tree_node_t *d1, tree_node_t *d2){
     d2->data = tmp;
 }
 
-/* Search for tree node containing @data
- * Returns a pointer to the tree node containing @data.
- * If the tree is empty NULL is returned.
- * If the data does not exist then the parent node of the data to be
- * inserted is returned. That means that the caller must check what @data
- * was returned 
- * */
+/**
+ * @brief Search the tree starting from root for data
+ * 
+ * @param tree to search
+ * @param root to start from
+ * @param data 
+ * @return tree_node_t* pointer to tree_node containing data
+ */
 tree_node_t *search_node(tree_t *tree, tree_node_t *root, void *data){
 
     if(!root)
@@ -78,8 +105,6 @@ tree_t *tree_init(int (*compare)(void *d1, void *d2),
                 
 }
 
-
-
 tree_node_t *tree_insert(tree_t *tree, void *data){
 
     if(!tree){
@@ -114,11 +139,6 @@ tree_node_t *tree_insert(tree_t *tree, void *data){
     return node;
 }
 
-
-
-/* Checks if @tree contains @data.
- * If @data is present then 0 is returned,
- * If @data is not present a non-zero integer is returnded*/
 int tree_contains(tree_t *tree, void *data){
 
     if(!tree)
@@ -132,7 +152,6 @@ int tree_contains(tree_t *tree, void *data){
     return (tree->compare(node->data, data));
 }
 
-// TODO: Remove tree node
 tree_node_t *tree_remove(tree_t *tree, void *data){
     
     if(!tree)
