@@ -6,3 +6,4 @@ Data Structure library in C.
 - Double Linked List
 - Stack
 - Fifo
+- Binary Tree
