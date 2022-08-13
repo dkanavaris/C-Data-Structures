@@ -6,3 +6,4 @@ main
 Makefile
 build
 lib
+*.out

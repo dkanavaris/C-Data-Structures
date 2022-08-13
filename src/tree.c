@@ -30,13 +30,13 @@ tree_node_t *search_node(tree_t *tree, tree_node_t *root, void *data){
     if(!root)
         return NULL;
     
-    if(tree->compare(root, data) == 0)
+    if(tree->compare(root->data, data) == 0)
         return root;
 
-    else if (tree->compare(root, data) < 0 && root->right)
+    else if (tree->compare(root->data, data) < 0 && root->right)
         return search_node(tree, root->right, data);
     
-    else if (tree->compare(root, data) > 0 && root->left) 
+    else if (tree->compare(root->data, data) > 0 && root->left) 
         return search_node(tree, root->left, data);
     
     return root;
@@ -65,7 +65,7 @@ tree_node_t *tree_insert(tree_t *tree, void *data){
 
     if(parent_node == NULL){
         tree->root = node;
-        return 0;
+        return tree->root;
     }
 
     if(tree->compare(parent_node->data, data) < 0)
