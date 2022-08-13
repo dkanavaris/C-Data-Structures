@@ -75,3 +75,19 @@ tree_node_t *tree_insert(tree_t *tree, void *data){
 
     return node;
 }
+
+/* Checks if @tree contains @data.
+ * If @data is present then 0 is returned,
+ * If @data is not present a non-zero integer is returnded*/
+int tree_contains(tree_t *tree, void *data){
+
+    if(!tree)
+        return -1;
+    
+    tree_node_t *node = search_node(tree, tree->root, data);
+
+    if(!node)
+        return -1;
+
+    return tree->compare(node->data, data);
+}

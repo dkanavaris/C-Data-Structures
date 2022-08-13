@@ -102,5 +102,12 @@ int main(int argc, char **agrv){
     print_postorder(tree->root);
     printf("\n");
 
+
+    printf("Tree contains A : %d\n", tree_contains(tree, d1));
+
+    data_t my_data;
+    my_data.value = "O";
+    printf("Tree contains O : %d\n", tree_contains(tree, &my_data));
+
     return 0;
 }
