@@ -22,5 +22,5 @@ void tree_destroy(tree_t *tree);
 
 int tree_contains(tree_t *tree, void *data);
 tree_node_t *tree_insert(tree_t *tree, void *data);
-int tree_remove(tree_t *tree, void *data);
+tree_node_t *tree_remove(tree_t *tree, void *data);
 #endif
