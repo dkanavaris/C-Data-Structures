@@ -21,6 +21,12 @@ stack: $(SRC_DIR)/list.c $(SRC_DIR)/stack.c | directories
 	ar -rcs stack.a $(BUILD_DIR)/list.o $(BUILD_DIR)/stack.o
 	mv stack.a $(LIB_DIR)
 
+tree: $(SRC_DIR)/tree.c| directories
+	$(CC) -I $(INC_DIR) -c $(WFLAGS) $(SRC_DIR)/tree.c
+	mv *.o $(BUILD_DIR)
+	ar -rcs tree.a $(BUILD_DIR)/tree.o
+	mv tree.a $(LIB_DIR)
+
 directories:
 	mkdir -p $(BUILD_DIR)
 	mkdir -p $(LIB_DIR)
