@@ -32,12 +32,11 @@ int is_right_child(tree_node_t *node){
 /**
  * @brief Get the sibling of a node
  * 
- * @param tree 
  * @param node to get sibling of
  * @return tree_node_t* NULL if no sibling exists,
                         pointer to sibling if it exists
  */
-tree_node_t *get_sibling(tree_t *tree, tree_node_t *node){
+tree_node_t *get_sibling(tree_node_t *node){
 
     if(node->parent == NULL)
         return NULL;
