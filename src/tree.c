@@ -191,10 +191,12 @@ tree_node_t *tree_remove(tree_t *tree, void *data){
     tree_node_t *return_node;
 
     if(node->left && node->right){
-        curr_node = node->right;
+        // Node has two children swap it with the 
+        // max node of it's left subtree
+        curr_node = node->left;
 
-        while(curr_node->left)
-            curr_node = curr_node->left;
+        while(curr_node->right)
+            curr_node = curr_node->right;
 
         //Swap the data
         swap_node_data(node, curr_node);
