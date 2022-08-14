@@ -102,10 +102,20 @@ int main(int argc, char **agrv){
     print_postorder(tree->root);
     printf("\n");
 
+    tree_remove(tree, d6);
+    tree_remove(tree, d2);
+    tree_remove(tree, d4);
+    tree_remove(tree, d7);
+    tree_remove(tree, d9);
+    tree_remove(tree, d2);
 
-    printf("Tree contains A : %d\n", tree_contains(tree, d1));
+    print_preorder(tree->root);
+    printf("\n");
 
     data_t my_data;
+    my_data.value = "A";
+    printf("Tree contains A : %d\n", tree_contains(tree, &my_data));
+
     my_data.value = "O";
     printf("Tree contains O : %d\n", tree_contains(tree, &my_data));
 

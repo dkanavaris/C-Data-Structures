@@ -203,7 +203,7 @@ tree_node_t *tree_remove(tree_t *tree, void *data){
 
     if(node->left)
         node->left->parent = node->parent;
-    else
+    else if(node->right)
         node->right->parent = node->parent;
 
     if(tree->root == node){
