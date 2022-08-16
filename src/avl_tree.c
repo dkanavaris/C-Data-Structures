@@ -97,6 +97,72 @@ void clear_tree_nodes(avl_tree_t *avl_tree, avl_node_t *node){
     free(node);
 }
 
+/**
+ * @brief Search the tree starting from root for data
+ * 
+ * @param tree to search
+ * @param root to start from
+ * @param data 
+ * @return tree_node_t* pointer to tree_node containing data
+ */
+avl_node_t *search_node(avl_tree_t *tree, avl_node_t *root, void *data){
+
+    if(!root)
+        return NULL;
+    
+    if(tree->compare(root->data, data) == 0)
+        return root;
+
+    else if (tree->compare(root->data, data) < 0 && root->right)
+        return search_node(tree, root->right, data);
+    
+    else if (tree->compare(root->data, data) > 0 && root->left) 
+        return search_node(tree, root->left, data);
+    
+    return root;
+}
+
+// Find the node that will take part in recostrunction
+// depending on the children height.
+avl_node_t *rebalance_son(avl_node_t *node){
+    if(!node)
+        return NULL;
+
+    if(get_left_son_height(node) > get_right_son_height())
+        return node->left;
+    else if(get_right_son_height(node) > get_left_son_height(node))
+        return node->right;
+    
+    if(is_left_child(node))
+        return node->left;
+    
+    return node->right;
+}
+
+//TODO: Implement this
+avl_node_t *reconstruct(avl_node_t *v, avl_node_t *w, avl_node_t *u){
+    return NULL;
+}
+
+// Rebalance node`
+void rebalance(avl_node_t *node){
+
+    // Go up the root
+    while(node){
+        remedy_height(node); // Updat the height
+        if(!is_balanced(node)){ // Check if balancing is needed
+            avl_node_t *w = rebalance_son(node);
+            avl_node_t *u = rebalance_son(w);
+            
+            node = reconstruct(node, w, u); // Reconstruct the tree
+            remedy_height(node->left); // Update children heights
+            remedy_height(node->right);
+            remedy_height(node);
+        }
+        node = node->parent; // Continue with rebalancing the parent
+    }
+}
+
 // Main AVL Functions
 avl_tree_t *avl_tree_init(int (*compare)(void *d1, void *d2), 
 					void (*free_node_data)(void *))
@@ -121,4 +187,41 @@ void avl_tree_destroy(avl_tree_t *avl_tree) {
 
     clear_tree_nodes(avl_tree, avl_tree->root);
     free(avl_tree);
+}
+
+avl_node_t *avl_tree_insert(avl_tree_t *tree, void *data){
+
+    if(!tree){
+        return NULL;
+    }
+
+    avl_node_t *parent_node = search_node(tree, tree->root, data);
+    
+    // Data already exists in the tree
+    if(parent_node && tree->compare(parent_node->data, data) == 0)
+        return parent_node;
+
+    avl_node_t *node = (avl_node_t *)malloc(sizeof(avl_node_t));
+    if(!node){
+        return NULL;
+    }
+
+    node->data = data;
+    node->left = node->right = NULL;
+    node->parent = parent_node;
+    node->height = 0;
+
+    if(parent_node == NULL){
+        tree->root = node;
+        return tree->root;
+    }
+
+    if(tree->compare(parent_node->data, data) < 0)
+        parent_node->right = node;
+    else
+        parent_node->left = node;
+
+    rebalance(node);
+    // Rebalance the son now
+    return node;
 }

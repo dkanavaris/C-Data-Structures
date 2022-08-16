@@ -1,6 +1,5 @@
 #ifndef __AVL_TREE_H__
 #define __AVL_TREE_H__
-#include "tree.h"
 
 typedef struct avl_node{
 
@@ -22,6 +21,6 @@ avl_tree_t *avl_tree_init(int (*compare)(void *d1, void *d2),
 
 void avl_tree_destroy(avl_tree_t *avl_tree);
 
-
+avl_node_t *avl_tree_insert(avl_tree_t *avl_tree, void *data);
 
 #endif
