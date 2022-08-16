@@ -85,6 +85,18 @@ int is_balanced(avl_node_t *node){
     int balance = abs(get_left_son_height(node) - get_right_son_height(node));
     return (balance == 1);
 }
+
+void clear_tree_nodes(avl_tree_t *avl_tree, avl_node_t *node){
+
+    if(node->left)
+        clear_tree_nodes(node->left);
+    if(node->right)
+        clear_tree_nodes(node->right);
+    
+    avl_tree->free_node_data(node);
+    free(node);
+}
+
 // Main AVL Functions
 avl_tree_t *avl_tree_init(int (*compare)(void *d1, void *d2), 
 					void (*free_node_data)(void *))
@@ -102,4 +114,11 @@ avl_tree_t *avl_tree_init(int (*compare)(void *d1, void *d2),
     return avl_tree;
 }
 
+void avl_tree_destroy(avl_tree_t *avl_tree) {
 
+    if(!avl_tree || !avl_tree->root)
+        return;
+
+    clear_tree_nodes(avl_tree, avl_tree->root);
+    free(avl_tree);
+}
