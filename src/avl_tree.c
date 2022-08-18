@@ -55,11 +55,11 @@ avl_node *rebalance_son(avl_node *node){
     return node->right;
 }
 
-avl_node *reconstruct(avl_node *v, avl_node *w, avl_node *u){
+avl_node *reconstruct(avl_tree *tree, avl_node *v, avl_node *w, avl_node *u){
     return NULL;
 }
 
-void rebalance(avl_node *node){
+void rebalance(avl_tree *tree, avl_node *node){
 
     if(!node)
         return;
@@ -69,7 +69,7 @@ void rebalance(avl_node *node){
         if(!is_balanced(node)){
             avl_node *w = rebalance_son(node);
             avl_node *u = rebalance_son(w);
-            node = reconstruct(node, w, u);
+            node = reconstruct(tree, node, w, u);
             remedy_height(node->left);
             remedy_height(node->right);
             remedy_height(node);
@@ -108,6 +108,6 @@ int avl_insert(avl_tree *tree, void *data){
     info->height = 1;
     node->info = info;
 
-    rebalance(node); // Rebalance the inserted node
+    rebalance(tree, node); // Rebalance the inserted node
     return 0;
 }
