@@ -20,9 +20,9 @@ int is_left_child(tree_node_t *node){
  * @brief Check if node is a left child
  * 
  * @param node to check
- * @return int 1 if node is left child, 0 otherwise
+ * @return int 1 if node is right child, 0 otherwise
  */
-int is_left_child(tree_node_t *node){
+int is_right_child(tree_node_t *node){
     if(!node)
         return -1;
     
