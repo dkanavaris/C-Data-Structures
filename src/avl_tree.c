@@ -12,6 +12,10 @@ void avl_destroy(avl_tree *tree){
     tree_destroy(tree);
 }
 
+int avl_contains(avl_tree *tree, void *data){
+    return tree_contains(tree, data);
+}
+
 int avl_insert(avl_tree *tree, void *data){
 
     tree_node_t *node = tree_insert(tree, data);

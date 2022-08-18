@@ -15,6 +15,9 @@ avl_tree *avl_init(int (*compare)(void *d1, void *d2),
 
 void avl_destroy(avl_tree *tree);
 
+int avl_contains(avl_tree *tree, void *data);
+
+
 int avl_insert(avl_tree *tree, void *data);
 
 #endif
