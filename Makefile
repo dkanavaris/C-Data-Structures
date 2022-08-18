@@ -27,10 +27,10 @@ tree: $(SRC_DIR)/tree.c| directories
 	ar -rcs tree.a $(BUILD_DIR)/tree.o
 	mv tree.a $(LIB_DIR)
 
-avl_tree: $(SRC_DIR)/avl_tree.c| directories
-	$(CC) -I $(INC_DIR) -c $(WFLAGS) $(SRC_DIR)/avl_tree.c -lm
+avl_tree: $(SRC_DIR)/tree.c $(SRC_DIR)/avl_tree.c| directories
+	$(CC) -I $(INC_DIR) -c $(WFLAGS) $(SRC_DIR)/avl_tree.c $(SRC_DIR)/tree.c -lm
 	mv *.o $(BUILD_DIR)
-	ar -rcs avl_tree.a $(BUILD_DIR)/avl_tree.o
+	ar -rcs avl_tree.a $(BUILD_DIR)/avl_tree.o $(BUILD_DIR)/tree.o 
 	mv avl_tree.a $(LIB_DIR)
 
 directories:
