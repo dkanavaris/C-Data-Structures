@@ -112,14 +112,20 @@ void clear_tree_nodes(tree_t *tree, tree_node_t *node){
         clear_tree_nodes(tree, node->right);
     
     tree->free_node_data(node->data);
+    free(node->info);
     free(node);
 }
 
 void tree_destroy(tree_t *tree){
 
-    if(!tree || !tree->root)
+    if(!tree)
         return;
     
+    if(!tree->root){
+        free(tree);
+        return;
+    }
+
     clear_tree_nodes(tree, tree->root);
     free(tree);
 }
@@ -144,6 +150,7 @@ tree_node_t *tree_insert(tree_t *tree, void *data){
     node->data = data;
     node->left = node->right = NULL;
     node->parent = parent_node;
+    node->info = NULL;
 
     if(parent_node == NULL){
         tree->root = node;
@@ -223,6 +230,7 @@ tree_node_t *tree_remove(tree_t *tree, void *data){
     }
 
     tree->free_node_data(node->data);
+    free(node->info);
     free(node);
     return return_node;
 }

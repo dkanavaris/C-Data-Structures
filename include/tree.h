@@ -3,6 +3,8 @@
 
 typedef struct tree_node {
     void *data;
+    void *info; // Used by AVL and REDBLACK. Fiels must be static since
+                // data is freed by just calling free(info)
     struct tree_node *parent;
     struct tree_node *left;
     struct tree_node *right;
