@@ -58,4 +58,21 @@ tree_node_t *tree_insert(tree_t *tree, void *data);
  *                        NULL if no such node exists
  */
 tree_node_t *tree_remove(tree_t *tree, void *data);
+
+/**
+ * @brief Check if node is a left child
+ * 
+ * @param node to check
+ * @return int 1 if node is left child, 0 otherwise
+ */
+int is_left_child(tree_node_t *node);
+
+/**
+ * @brief Check if node is a left child
+ * 
+ * @param node to check
+ * @return int 1 if node is left child, 0 otherwise
+ */
+int is_left_child(tree_node_t *node);
+
 #endif
